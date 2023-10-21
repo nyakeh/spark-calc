@@ -1,3 +1,4 @@
+import { Outlet, Link } from "react-router-dom";
 import './App.css';
 
 function App() {
@@ -9,17 +10,19 @@ function App() {
         <nav className='App-nav'>
           <ul>
             <li>
-                <a href="/coast">&#129518; Coast FI</a>
+                <Link to="/">&#129518; Coast FI</Link>
             </li>
             <li>
-                <a href="/fi">&#128293; FIRE</a>
+                <Link to="/fire">&#128293; FIRE</Link>
             </li>
             <li>
-                <a href="/compound">&#128200; Compound Interest</a>
+                <Link to="/compound">&#128200; Compound Interest</Link>
             </li>
           </ul>
         </nav>
       </header>
+      
+      <Outlet />
     </div>
   );
 }
