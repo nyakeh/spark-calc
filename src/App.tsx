@@ -5,11 +5,21 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Spark Calc</h1>
+        
+        <nav className='App-nav'>
+          <ul>
+            <li>
+                <a href="/coast">Coast Fi</a>
+            </li>
+            <li>
+                <a href="/fi">Financial Independence</a>
+            </li>
+            <li>
+                <a href="/compound">Compound Interest</a>
+            </li>
+          </ul>
+        </nav>
       </header>
-      <section className='App-main'>
-        <h2>Compound Interest Calculator</h2>
-        <p>Hello World</p>
-      </section>
     </div>
   );
 }

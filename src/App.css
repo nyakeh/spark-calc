@@ -1,14 +1,32 @@
-.App {
-  text-align: center;
-  background-color: white;
-}
-
 .App-header {
   display: flex;
   justify-content: center;
   background-color: #656565;
   color: white;
 }
+
+.App-nav ul {
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+.App-nav li {
+  float: left;
+}
+
+.App-nav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.App-nav li a:hover {
+  color: #91A379;
+}
+
 
 .App-main {
   position: relative;
