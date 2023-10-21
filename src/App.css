@@ -5,6 +5,7 @@
   color: white;
 }
 
+/* Navigation */
 .App-nav ul {
   list-style-type: none;
   padding: 0;
@@ -27,10 +28,19 @@
   color: #91A379;
 }
 
-
+/* Coast page body */
 .App-main {
   position: relative;
   max-width: 656px;
-  padding: 40px;
+  padding: 20px;
   margin: auto;
+}
+
+/* Coast input form */
+label { 
+  display: block;
+}
+
+input { 
+  margin: 5px;
 }

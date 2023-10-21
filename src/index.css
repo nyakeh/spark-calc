@@ -9,3 +9,8 @@ body {
 code {
   font-family: Consolas, 'Courier New', monospace;
 }
+
+span {
+  font-weight: bold;
+  color: #656565;
+}
