@@ -36,11 +36,41 @@ export const data = {
 function Coast() {
   const [investedAssets, setInvestedAssets] = useState(0);
   const [age, setAge] = useState(30);
+  const [annualExpenses , setAnnualExpenses] = useState(17000);
   const [monthlyContribution, setMonthlyContribution] = useState(500);
-
+  
+  const [retirementAge, setRetirementAge] = useState(55);
+  const [interestRate, setInterestRate] = useState(7);
+  const [inflationRate, setInflationRate] = useState(2);
+  const [safeWithdrawalRate, setSafeWithdrawalRate] = useState(4);
+  
+  const [initialAssets, setInitialAssets] = useState(0);
+  const [yearsToRetirement, setYearsToRetirement] = useState(0);
+  const [retirementNetWorth, setRetirementNetWorth] = useState(425000);
+  const [safeWithdrawalAmount, setSafeWithdrawalAmount] = useState(17000);
+  const [todayCoastFigure, setTodayCoastFigure] = useState(78306);
+  const [initialSumCompounded, setInitialSumCompounded] = useState(0);
+  
   const reCalculate = (event: any) => {
     event.preventDefault();
-    alert(`investedAssets: ${investedAssets}`)
+    setInitialAssets(investedAssets);
+
+    let fireNumber = annualExpenses * 25;
+    let rate = ((interestRate - inflationRate) / 100) + 1;
+    let years = retirementAge - age;
+    setYearsToRetirement(years);
+    setInitialSumCompounded(investedAssets * (Math.pow(rate, years)));
+    setTodayCoastFigure(fireNumber / (Math.pow(rate, years)));
+    
+    let annualContribution = monthlyContribution * 12;
+    let futureValue = 0;
+    let tempYearValue = investedAssets;
+    for (let i = 0; i < years; i++) {
+      futureValue = tempYearValue * Math.pow(rate, 1);
+      tempYearValue = futureValue + annualContribution;
+    }
+    setRetirementNetWorth(tempYearValue);
+    setSafeWithdrawalAmount(tempYearValue / (100 / safeWithdrawalRate))
   }
 
   return (
@@ -48,7 +78,9 @@ function Coast() {
       <section className='App-main'>
         <h2>Coast FI &#129518; Calculator</h2>
         <Line options={options} data={data} />
-        <p>You're on track to have <span>£328,167</span> at retirement. If you take <span>£26,000</span> per year, this will last until age <span>90</span>.</p>
+        <p>You're on track to have <span>£{retirementNetWorth.toFixed(0)}</span> at retirement. You can take <span>£{safeWithdrawalAmount.toFixed(0)}</span> per year.</p>
+        <p>To coast today you'd need <span>£{todayCoastFigure.toFixed(0)}</span> invested</p>
+        {initialSumCompounded > 1 && <p>Your initial <span>£{initialAssets.toFixed(0)}</span> will grow to <span>£{initialSumCompounded.toFixed(0)}</span> over the <span>yearsToRetirement</span> years till retirement age</p>}
       </section>
 
       <section className='App-main'>
@@ -59,6 +91,9 @@ function Coast() {
             </label>
             <label>Age: 
               <input type='number' value={age} onChange={e => setAge(Number(e.target.value))} />
+            </label>
+            <label>Annual Expenses: 
+              <input type='number' value={annualExpenses} onChange={e => setAnnualExpenses(Number(e.target.value))} />
             </label>
             <label>Monthly Contribution: 
               <input type='number' value={monthlyContribution} onChange={e => setMonthlyContribution(Number(e.target.value))} />
