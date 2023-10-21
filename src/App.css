@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+  background-color: white;
+}
+
+.App-header {
+  display: flex;
+  justify-content: center;
+  background-color: #656565;
+  color: white;
+}
+
+.App-main {
+  position: relative;
+  max-width: 656px;
+  padding: 40px;
+  margin: auto;
+}
