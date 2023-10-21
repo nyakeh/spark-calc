@@ -9,13 +9,13 @@ function App() {
         <nav className='App-nav'>
           <ul>
             <li>
-                <a href="/coast">Coast Fi</a>
+                <a href="/coast">&#129518; Coast FI</a>
             </li>
             <li>
-                <a href="/fi">Financial Independence</a>
+                <a href="/fi">&#128293; FIRE</a>
             </li>
             <li>
-                <a href="/compound">Compound Interest</a>
+                <a href="/compound">&#128200; Compound Interest</a>
             </li>
           </ul>
         </nav>

@@ -37,6 +37,21 @@
 }
 
 /* Coast input form */
+.Coast-circle {
+  border-style: solid;
+  border-color: #91A379;
+  border-width: 15px;
+  border-radius: 50%;
+  max-width: 400px;
+  height: 400px;
+  margin: auto;
+  background-color: rgba(145, 163, 121, 0.3);
+}
+
+.Coast-form {
+  padding-top: 140px;
+}
+
 label { 
   display: block;
 }

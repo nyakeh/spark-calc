@@ -46,24 +46,26 @@ function Coast() {
   return (
     <div>
       <section className='App-main'>
-        <h2>Coast FI &#128293; Calculator</h2>
+        <h2>Coast FI &#129518; Calculator</h2>
         <Line options={options} data={data} />
         <p>You're on track to have <span>£328,167</span> at retirement. If you take <span>£26,000</span> per year, this will last until age <span>90</span>.</p>
       </section>
 
       <section className='App-main'>
-        <form onSubmit={reCalculate}>
-          <label>Invested Assets: 
-            <input type='number' value={investedAssets} onChange={e => setInvestedAssets(Number(e.target.value))} />
-          </label>
-          <label>Age: 
-            <input type='number' value={age} onChange={e => setAge(Number(e.target.value))} />
-          </label>
-          <label>Monthly Contribution: 
-            <input type='number' value={monthlyContribution} onChange={e => setMonthlyContribution(Number(e.target.value))} />
-          </label>
-          <input type="submit" />
-        </form>
+        <div className='Coast-circle'>
+          <form onSubmit={reCalculate} className='Coast-form'>
+            <label>Invested Assets: 
+              <input type='number' value={investedAssets} onChange={e => setInvestedAssets(Number(e.target.value))} />
+            </label>
+            <label>Age: 
+              <input type='number' value={age} onChange={e => setAge(Number(e.target.value))} />
+            </label>
+            <label>Monthly Contribution: 
+              <input type='number' value={monthlyContribution} onChange={e => setMonthlyContribution(Number(e.target.value))} />
+            </label>
+            <input type="submit" value='Calculate' />
+          </form>
+        </div>
       </section>
     </div>
   );
