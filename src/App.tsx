@@ -13,10 +13,13 @@ function App() {
                 <Link to="/">&#129518; Coast FI</Link>
             </li>
             <li>
-                <Link to="/fire">&#128293; FIRE</Link>
+                <Link to="/compound">&#128200; Compound</Link>
             </li>
             <li>
-                <Link to="/compound">&#128200; Compound Interest</Link>
+                <Link to="/saving">&#128183; Saving</Link>
+            </li>
+            <li>
+                <Link to="/fire">&#128293; FIRE</Link>
             </li>
           </ul>
         </nav>
