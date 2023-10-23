@@ -37,7 +37,7 @@ function Compound() {
 				</div>
 			</section>
 
-      <CalculateCompoundInterest invested = {investedAssets} monthlyContribution = {monthlyContribution} interestRate = {interestRate} years = {years} />
+      		<CalculateCompoundInterest invested = {investedAssets} monthlyContribution = {monthlyContribution} interestRate = {interestRate} years = {years} />
 		</div>
 	);
 }
