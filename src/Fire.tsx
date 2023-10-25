@@ -6,22 +6,26 @@ function Fire() {
 	const [monthlyInvestment, setMonthlyInvestment] = useState(500);
 	const [monthlySpend, setMonthlySpend] = useState(1500);
 	const [yearsUntilFire, setYearsUntilFire] = useState(25);
+	const [fireNumber, setFireNumber] = useState(450000);
+	const [interestEarned, setInterestEarned] = useState(295905);
 
 	const reCalculate = (event: any) => {
 		event.preventDefault();
 
-		let fireNumber = monthlySpend * 12 * 25;
+		let fireTarget = monthlySpend * 12 * 25;
 		let annualContribution = monthlyInvestment * 12;
 		let tempNetWorth = investedAssets;
-		let count = 0;
+		let yearCount = 0;
 
-		while (tempNetWorth < fireNumber) {
+		while (tempNetWorth < fireTarget) {
 			let futureValue = tempNetWorth * Math.pow(1.07, 1);
 			tempNetWorth = futureValue + annualContribution;
-			count++;
+			yearCount++;
 		}
 
-		setYearsUntilFire(count);
+    setFireNumber(fireTarget);
+		setYearsUntilFire(yearCount);
+    setInterestEarned(tempNetWorth - (investedAssets + (annualContribution*yearCount)));
 	};
 
 	return (
@@ -51,6 +55,12 @@ function Fire() {
 			<section className="App-main">
 				<p>
 					You'll be FI in <span>{yearsUntilFire}</span> years!
+				</p>
+				<p>
+					<span>£{fireNumber}</span> FIRE number
+				</p>
+				<p>
+					Earning <span>£{interestEarned.toFixed(0)}</span> investment gains
 				</p>
 			</section>
 		</div>
