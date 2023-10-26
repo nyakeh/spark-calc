@@ -56,6 +56,9 @@ label {
   display: block;
 }
 
-input { 
+input {
   margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border-color: rgba(145, 163, 121, 0.2);
 }
