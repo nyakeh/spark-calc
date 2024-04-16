@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 
 function CalculateCompoundInterest(props: { invested: number; monthlyContribution: number; interestRate: number; years: number; }) {
   let rate = (props.interestRate / 100) + 1;
@@ -17,7 +17,7 @@ function CalculateCompoundInterest(props: { invested: number; monthlyContributio
   let totalInterestEarned = futureInvestmentValue - (props.invested + additionalContributions);
 
   return (
-    <section className='App-main'>
+    <section className="App-main">
       <h3>Projection for {props.years} years</h3>
       <p>Future investment value</p>
       <span>£{futureInvestmentValue.toFixed(0)}</span>

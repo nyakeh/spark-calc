@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import CalculateSaving from "./CalculateSaving";
 
-const reCalculate = (event: any) => {
+const reCalculate = (event: React.FormEvent<HTMLFormElement>) => {
 	event.preventDefault();
 };
 

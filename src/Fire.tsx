@@ -9,7 +9,7 @@ function Fire() {
 	const [fireNumber, setFireNumber] = useState(450000);
 	const [interestEarned, setInterestEarned] = useState(295905);
 
-	const reCalculate = (event: any) => {
+	const reCalculate = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
 		let fireTarget = monthlySpend * 12 * 25;

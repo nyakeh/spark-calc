@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       <header className="App-header">
         <h1>Spark Calc</h1>
         
-        <nav className='App-nav'>
+        <nav className="App-nav">
           <ul>
             <li>
                 <Link to="/">&#129518; Coast FI</Link>

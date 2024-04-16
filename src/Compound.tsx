@@ -3,7 +3,7 @@ import "./App.css";
 import CalculateCompoundInterest from "./CalculateCompoundInterest";
 
 function Compound() {
-	const [investedAssets, setInvestedAssets] = useState(0);
+	const [investedAssets, setInvestedAssets] = useState(25000);
 	const [monthlyContribution, setMonthlyContribution] = useState(500);
 	const [years, setYears] = useState(10);
 	const [interestRate, setInterestRate] = useState(7);

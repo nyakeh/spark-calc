@@ -39,31 +39,29 @@ function roughYearsToFI(percentageSaved: number) {
 function CalculateSaving(props: { salary: number; pensionContribution: number; monthlySavings: number }) {
 	let pensionCash = props.salary * (props.pensionContribution / 100);
 	let annualSaving = props.monthlySavings * 12;
-	let totalSaved = pensionCash + annualSaving;
-	let grossSavedPercentage = (totalSaved / props.salary) * 100;
+	let totalInvested = pensionCash + annualSaving;
+	let grossSavedPercentage = (totalInvested / props.salary) * 100;
 
 	let taxableIncome = props.salary - pensionCash;
 	let incomeTax = CalculateIncomeTax(taxableIncome);
 	let nationalInsurance = CalculateNationalInsurance(taxableIncome);
-	console.log("incomeTax: " + incomeTax);
-	console.log("nationalInsurance: " + nationalInsurance);
 	let tax = incomeTax + nationalInsurance;
 
-	let netSavedPercentage = (totalSaved / (props.salary - tax)) * 100;
-  let yearsToFI = roughYearsToFI(netSavedPercentage/100);
+	let netSavedPercentage = (totalInvested / (props.salary - tax)) * 100;
+  	let yearsToFI = roughYearsToFI(netSavedPercentage/100);
 
 	return (
 		<div>
 			<p>
-				Your saving <span>{grossSavedPercentage.toFixed(0)}%</span> of gross income
+				Your saving <span>{grossSavedPercentage.toFixed(0)}%</span> of gross income, <span>{netSavedPercentage.toFixed(0)}%</span> of net income
 			</p>
 			<p>
-				Alternatively <span>{netSavedPercentage.toFixed(0)}%</span> of net income
+				<span>£{totalInvested.toFixed(0)}</span> per year total saved
 			</p>
 			<p>
-				<span>£{pensionCash.toFixed(0)}</span> Added to your pension pot
+				Split: <span>£{pensionCash.toFixed(0)}</span> pension | <span>£{annualSaving.toFixed(0)}</span> ISA
 			</p>
-      <p>Years till FI from zero <span>{yearsToFI}</span></p>
+      		<p>Years till FI from zero <span>{yearsToFI.toFixed(1)}</span></p>
 		</div>
 	);
 }
