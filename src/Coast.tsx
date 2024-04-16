@@ -2,6 +2,7 @@ import "./App.css";
 import { Chart as ChartJS, CategoryScale, LinearScale,PointElement, LineElement, Title, Tooltip, Filler, Legend } from "chart.js";
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
+import { Pound } from "./Pound";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
 
@@ -77,9 +78,9 @@ function Coast() {
       <section className="App-main">
         <h2>Coast FI &#129518; Calculator</h2>
         <Line options={options} data={data} />
-          <p>You"re on track to have <span>£{retirementNetWorth.toFixed(0)}</span> at retirement. You can take <span>£{safeWithdrawalAmount.toFixed(0)}</span> per year.</p>
-          <p>To coast today you"d need <span>£{todayCoastFigure.toFixed(0)}</span> invested</p>
-          <p>Your initial <span>£{initialAssets.toFixed(0)}</span> will grow to <span>£{initialSumCompounded.toFixed(0)}</span> over the <span>{yearsToRetirement}</span> years till retirement age</p>
+          <p>You"re on track to have <span>{Pound.format(retirementNetWorth)}</span> at retirement. You can take <span>{Pound.format(safeWithdrawalAmount)}</span> per year.</p>
+          <p>To coast today you"d need <span>{Pound.format(todayCoastFigure)}</span> invested</p>
+          <p>Your initial <span>{Pound.format(initialAssets)}</span> will grow to <span>{Pound.format(initialSumCompounded)}</span> over the <span>{yearsToRetirement}</span> years till retirement age</p>
       </section>
 
       <section className="App-main">

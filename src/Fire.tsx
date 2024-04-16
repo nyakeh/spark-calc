@@ -1,13 +1,14 @@
 import { useState } from "react";
+import { Pound } from "./Pound";
 import "./App.css";
 
 function Fire() {
-	const [investedAssets, setInvestedAssets] = useState(15000);
+	const [investedAssets, setInvestedAssets] = useState(25000);
 	const [monthlyInvestment, setMonthlyInvestment] = useState(500);
-	const [monthlySpend, setMonthlySpend] = useState(1500);
-	const [yearsUntilFire, setYearsUntilFire] = useState(25);
-	const [fireNumber, setFireNumber] = useState(450000);
-	const [interestEarned, setInterestEarned] = useState(295905);
+	const [monthlySpend, setMonthlySpend] = useState(2000);
+	const [yearsUntilFire, setYearsUntilFire] = useState(27);
+	const [fireNumber, setFireNumber] = useState(600000);
+	const [interestEarned, setInterestEarned] = useState(415250);
 
 	const reCalculate = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -57,10 +58,10 @@ function Fire() {
 					You'll be FI in <span>{yearsUntilFire}</span> years!
 				</p>
 				<p>
-					<span>£{fireNumber}</span> FIRE number
+					<span>{Pound.format(fireNumber)}</span> FIRE number
 				</p>
 				<p>
-					Earning <span>£{interestEarned.toFixed(0)}</span> investment gains
+					Earning <span>{Pound.format(interestEarned)}</span> investment gains
 				</p>
 			</section>
 		</div>

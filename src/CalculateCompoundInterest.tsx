@@ -1,4 +1,5 @@
 import "./App.css";
+import { Pound } from "./Pound";
 
 function CalculateCompoundInterest(props: { invested: number; monthlyContribution: number; interestRate: number; years: number; }) {
   let rate = (props.interestRate / 100) + 1;
@@ -20,11 +21,11 @@ function CalculateCompoundInterest(props: { invested: number; monthlyContributio
     <section className="App-main">
       <h3>Projection for {props.years} years</h3>
       <p>Future investment value</p>
-      <span>£{futureInvestmentValue.toFixed(0)}</span>
+      <span>{Pound.format(futureInvestmentValue)}</span>
       <p>Additional deposits</p>
-      <span>£{additionalContributions.toFixed(0)}</span>
+      <span>{Pound.format(additionalContributions)}</span>
       <p>Total interest earned</p>
-      <span>£{totalInterestEarned.toFixed(0)}</span>
+      <span>{Pound.format(totalInterestEarned)}</span>
     </section>
   );
 }
