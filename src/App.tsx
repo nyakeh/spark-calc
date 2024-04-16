@@ -21,6 +21,9 @@ function App() {
             <li>
                 <Link to="/fire">&#128293; FIRE</Link>
             </li>
+            <li>
+                <Link to="/forecast">&#127793; Forecast</Link>
+            </li>
           </ul>
         </nav>
       </header>

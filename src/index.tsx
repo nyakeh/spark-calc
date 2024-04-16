@@ -7,6 +7,7 @@ import Coast from "./Coast";
 import Compound from "./Compound";
 import Saving from "./Saving";
 import Fire from "./Fire";
+import Forecast from "./Forecast";
 import NotFound from "./NotFound";
 
 const root = ReactDOM.createRoot(
@@ -21,6 +22,7 @@ root.render(
           <Route path="compound" element={<Compound />} />
           <Route path="saving" element={<Saving />} />
           <Route path="fire" element={<Fire />} />
+          <Route path="forecast" element={<Forecast />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
