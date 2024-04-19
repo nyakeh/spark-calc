@@ -5,26 +5,28 @@ import "./App.css";
 function Forecast() {
   const [pensionPot, setPensionPot] = useState(25000);
   const [isaPot, setIsaPot] = useState(25000);
-  const [monthlyPensionContribution, setMonthlyPensionContribution] = useState(1000);
+  const [monthlyPensionContribution, setMonthlyPensionContribution] = useState(500);
+  const [monthlyIsaContribution, setMonthlyIsaContribution] = useState(500);
   const [age, setAge] = useState(30);
   const [annualSpend, setAnnualSpend] = useState(24000);
 
   const [fireNumber, setFireNumber] = useState(600000);
   const [fireAge, setFireAge] = useState(49);
   const [fiDate, setFiDate] = useState("April 2043");
-  const [interestEarned, setInterestEarned] = useState(351374);
 
   const reCalculate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     let fireTarget = annualSpend * 25;
-    let annualContribution = monthlyPensionContribution * 12;
+    let annualPensionContribution = monthlyPensionContribution * 12;
+    let annualIsaContribution = monthlyIsaContribution * 12;
     let tempNetWorth = pensionPot+isaPot;
     let yearCount = 0;
 
     while (tempNetWorth < fireTarget) {
-      let futureValue = tempNetWorth * Math.pow(1.07, 1);
-      tempNetWorth = futureValue + annualContribution;
+      let futurePensionValue = annualPensionContribution * Math.pow(1.07, 1);
+      let futureIsaValue = annualIsaContribution * Math.pow(1.07, 1);
+      tempNetWorth += futurePensionValue + annualPensionContribution + futureIsaValue + annualIsaContribution;
       yearCount++;
     }
     let fiDate = new Date(new Date().setFullYear(new Date().getFullYear() + yearCount));
@@ -32,7 +34,6 @@ function Forecast() {
     setFiDate(dateFormatted);
     setFireNumber(fireTarget);
     setFireAge(age+yearCount);
-    setInterestEarned(tempNetWorth - (pensionPot + isaPot + annualContribution * yearCount));
   };
 
   return (
@@ -54,6 +55,17 @@ function Forecast() {
             />
           </label>
           <label>
+            Monthly Pension:
+            <input
+              type="number"
+              value={monthlyPensionContribution}
+              onChange={(e) => setMonthlyPensionContribution(Number(e.target.value))}
+              min={1}
+              max={10000}
+            />
+          </label>
+          <br/>
+          <label>
             ISA pots:
             <input
               type="number"
@@ -64,15 +76,16 @@ function Forecast() {
             />
           </label>
           <label>
-            Monthly Investment:
+            Monthly ISA:
             <input
               type="number"
-              value={monthlyPensionContribution}
-              onChange={(e) => setMonthlyPensionContribution(Number(e.target.value))}
+              value={monthlyIsaContribution}
+              onChange={(e) => setMonthlyIsaContribution(Number(e.target.value))}
               min={1}
-              max={50000}
+              max={10000}
             />
           </label>
+          <br/>
           <label>
             Age:
             <input
