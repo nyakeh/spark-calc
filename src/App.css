@@ -1,8 +1,12 @@
 .App-header {
   display: flex;
   justify-content: center;
-  background-color: #656565;
+  background-color: #070707;
   color: white;
+}
+
+.App-header h1 {
+  color: #91A379;
 }
 
 /* Navigation */
