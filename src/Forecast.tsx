@@ -4,36 +4,46 @@ import "./App.css";
 
 function Forecast() {
   const [pensionPot, setPensionPot] = useState(25000);
-  const [isaPot, setIsaPot] = useState(25000);
+  const [isaPot, setIsaPot] = useState(15000);
   const [monthlyPensionContribution, setMonthlyPensionContribution] = useState(500);
   const [monthlyIsaContribution, setMonthlyIsaContribution] = useState(500);
   const [age, setAge] = useState(30);
   const [annualSpend, setAnnualSpend] = useState(24000);
 
   const [fireNumber, setFireNumber] = useState(600000);
-  const [fireAge, setFireAge] = useState(49);
-  const [fiDate, setFiDate] = useState("April 2043");
+  const [fireAge, setFireAge] = useState(50);
+  const [fiDate, setFiDate] = useState("April 2044");
+  const [endPension, setEndPension] = useState(342715);
+  const [endIsa, setEndIsa] = useState(304018);
 
   const reCalculate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     let fireTarget = annualSpend * 25;
+    setFireNumber(fireTarget);
     let annualPensionContribution = monthlyPensionContribution * 12;
     let annualIsaContribution = monthlyIsaContribution * 12;
     let tempNetWorth = pensionPot+isaPot;
+    let tempPension = pensionPot;
+    let tempIsa = isaPot;
     let yearCount = 0;
 
     while (tempNetWorth < fireTarget) {
-      let futurePensionValue = annualPensionContribution * Math.pow(1.07, 1);
-      let futureIsaValue = annualIsaContribution * Math.pow(1.07, 1);
-      tempNetWorth += futurePensionValue + annualPensionContribution + futureIsaValue + annualIsaContribution;
+      let futurePensionValue = tempPension * Math.pow(1.07, 1);
+      tempPension = futurePensionValue + annualPensionContribution;
+
+      let futureIsaValue = tempIsa * Math.pow(1.07, 1);
+      tempIsa = futureIsaValue + annualIsaContribution;
+
+      tempNetWorth = tempPension + tempIsa;
       yearCount++;
     }
-    let fiDate = new Date(new Date().setFullYear(new Date().getFullYear() + yearCount));
-    let dateFormatted = fiDate.toLocaleString("default",{ month: "long", year: "numeric"});
-    setFiDate(dateFormatted);
-    setFireNumber(fireTarget);
+    
     setFireAge(age+yearCount);
+    setEndPension(tempPension);
+    setEndIsa(tempIsa);
+    let fiDate = new Date(new Date().setFullYear(new Date().getFullYear() + yearCount));
+    setFiDate(fiDate.toLocaleString("default", { month: "long", year: "numeric" }));
   };
 
   return (
@@ -60,7 +70,7 @@ function Forecast() {
               type="number"
               value={monthlyPensionContribution}
               onChange={(e) => setMonthlyPensionContribution(Number(e.target.value))}
-              min={1}
+              min={0}
               max={10000}
             />
           </label>
@@ -81,7 +91,7 @@ function Forecast() {
               type="number"
               value={monthlyIsaContribution}
               onChange={(e) => setMonthlyIsaContribution(Number(e.target.value))}
-              min={1}
+              min={0}
               max={10000}
             />
           </label>
@@ -116,6 +126,9 @@ function Forecast() {
         </p>
         <p>
           You"ll be FI in <span>{fiDate}</span>, aged {fireAge}
+        </p>
+        <p>
+          Total: <span>{Pound.format(endPension+endIsa)}</span> | Pension: {Pound.format(endPension)} | ISA: {Pound.format(endIsa)}
         </p>
       </section>
     </div>
