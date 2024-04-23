@@ -6,7 +6,7 @@
 }
 
 .App-header h1 {
-  color: #91A379;
+  color: #91a379;
 }
 
 /* Navigation */
@@ -29,7 +29,7 @@
 }
 
 .App-nav li a:hover {
-  color: #91A379;
+  color: #91a379;
 }
 
 /* Coast page body */
@@ -43,7 +43,7 @@
 /* Coast input form */
 .Coast-circle {
   border-style: solid;
-  border-color: #91A379;
+  border-color: #91a379;
   border-width: 15px;
   border-radius: 50%;
   max-width: 400px;
@@ -56,7 +56,7 @@
   padding-top: 125px;
 }
 
-label { 
+label {
   display: block;
 }
 
@@ -65,4 +65,22 @@ input {
   padding: 5px;
   border-radius: 5px;
   border-color: rgba(145, 163, 121, 0.2);
+}
+
+/* Table */
+table {
+  border-collapse: collapse;
+  border: 2px solid rgb(90, 90, 90);
+  font-size: 0.9rem;
+  letter-spacing: 1.2px;
+}
+
+thead {
+  background-color: #070707;
+}
+
+th,
+td {
+  border: 1px solid rgb(124, 124, 124);
+  padding: 8px 10px;
 }

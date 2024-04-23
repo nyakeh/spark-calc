@@ -2,6 +2,12 @@ import { useState } from "react";
 import { Pound } from "./Pound";
 import "./App.css";
 
+type annualFigure = {
+  year: number;
+  pension: number;
+  isa: number;
+};
+
 function Forecast() {
   const [pensionPot, setPensionPot] = useState(25000);
   const [isaPot, setIsaPot] = useState(15000);
@@ -15,7 +21,9 @@ function Forecast() {
   const [fiDate, setFiDate] = useState("April 2044");
   const [endPension, setEndPension] = useState(342715);
   const [endIsa, setEndIsa] = useState(304018);
+  const [annualFigures, setAnnualFigures] = useState<annualFigure[]>([]);
 
+  const currentYear = new Date().getFullYear();
   const reCalculate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -23,10 +31,11 @@ function Forecast() {
     setFireNumber(fireTarget);
     let annualPensionContribution = monthlyPensionContribution * 12;
     let annualIsaContribution = monthlyIsaContribution * 12;
-    let tempNetWorth = pensionPot+isaPot;
+    let tempNetWorth = pensionPot + isaPot;
     let tempPension = pensionPot;
     let tempIsa = isaPot;
     let yearCount = 0;
+    let tempAnnualFigures: annualFigure[] = [{ year: currentYear, pension: pensionPot, isa: isaPot }];
 
     while (tempNetWorth < fireTarget) {
       let futurePensionValue = tempPension * Math.pow(1.07, 1);
@@ -37,14 +46,43 @@ function Forecast() {
 
       tempNetWorth = tempPension + tempIsa;
       yearCount++;
+      tempAnnualFigures = [...tempAnnualFigures, { year: currentYear + yearCount, pension: tempPension, isa: tempIsa }];
     }
-    
-    setFireAge(age+yearCount);
+
+    setAnnualFigures(tempAnnualFigures);
+    setFireAge(age + yearCount);
     setEndPension(tempPension);
     setEndIsa(tempIsa);
-    let fiDate = new Date(new Date().setFullYear(new Date().getFullYear() + yearCount));
+    let fiDate = new Date(new Date().setFullYear(currentYear + yearCount));
     setFiDate(fiDate.toLocaleString("default", { month: "long", year: "numeric" }));
   };
+
+  function getTableContent() {
+    const iterateItem = (item: annualFigure) => {
+      return (
+        <tr key={item.year}>
+          <td>{item.year}</td>
+          <td>{Pound.format(item.pension)}</td>
+          <td>{Pound.format(item.isa)}</td>
+          <td>{Pound.format(item.pension+item.isa)}</td>
+        </tr>
+      );
+    };
+
+    return (
+      <table key="annual figures">
+        <thead>
+          <tr>
+            <th scope="col">Year</th>
+            <th scope="col">Pension</th>
+            <th scope="col">Isa</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>{annualFigures.map((item) => iterateItem(item))}</tbody>
+      </table>
+    );
+  }
 
   return (
     <div>
@@ -74,7 +112,7 @@ function Forecast() {
               max={10000}
             />
           </label>
-          <br/>
+          <br />
           <label>
             ISA pots:
             <input
@@ -95,16 +133,10 @@ function Forecast() {
               max={10000}
             />
           </label>
-          <br/>
+          <br />
           <label>
             Age:
-            <input
-              type="number"
-              value={age}
-              onChange={(e) => setAge(Number(e.target.value))}
-              min={1}
-              max={100}
-            />
+            <input type="number" value={age} onChange={(e) => setAge(Number(e.target.value))} min={1} max={100} />
           </label>
           <label>
             Retirement Spending:
@@ -128,8 +160,10 @@ function Forecast() {
           You"ll be FI in <span>{fiDate}</span>, aged {fireAge}
         </p>
         <p>
-          Total: <span>{Pound.format(endPension+endIsa)}</span> | Pension: {Pound.format(endPension)} | ISA: {Pound.format(endIsa)}
+          Total: <span>{Pound.format(endPension + endIsa)}</span> | Pension: {Pound.format(endPension)} | ISA:{" "}
+          {Pound.format(endIsa)}
         </p>
+        <div>{getTableContent()}</div>
       </section>
     </div>
   );
