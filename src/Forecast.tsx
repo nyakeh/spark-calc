@@ -1,14 +1,41 @@
 import { useState } from "react";
-import { Pound } from "./Pound";
 import "./App.css";
+import { Pound } from "./Pound";
+import Calculator from "./Domain/Calculator";
 
-type annualFigure = {
+export type InputAnnualFigure = {
   year: number;
   pension: number;
   isa: number;
 };
 
+export type InputForecastTimeline = {
+  startYear: number;
+  endYear: number;
+  monthlyPensionContribution: number;
+  monthlyIsaContribution: number;
+};
+
+export type InputForecast = {
+  pensionPot: number;
+  isaPot: number;
+  timelines: InputForecastTimeline[];
+  age: number;
+  annualSpend: number;
+};
+
+export type OutputForecast = {
+  fireNumber: number;
+  fireAge: number;
+  fireDate: string;
+  pension: number;
+  isa: number;
+  annualFigures: InputAnnualFigure[];
+};
+
 function Forecast() {
+  const [calculator] = useState(() => new Calculator());
+
   const [pensionPot, setPensionPot] = useState(25000);
   const [isaPot, setIsaPot] = useState(15000);
   const [monthlyPensionContribution, setMonthlyPensionContribution] = useState(500);
@@ -21,50 +48,42 @@ function Forecast() {
   const [fiDate, setFiDate] = useState("April 2044");
   const [endPension, setEndPension] = useState(342715);
   const [endIsa, setEndIsa] = useState(304018);
-  const [annualFigures, setAnnualFigures] = useState<annualFigure[]>([]);
+  const [annualFigures, setAnnualFigures] = useState<InputAnnualFigure[]>([]);
 
-  const currentYear = new Date().getFullYear();
   const reCalculate = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    let fireTarget = annualSpend * 25;
-    setFireNumber(fireTarget);
-    let annualPensionContribution = monthlyPensionContribution * 12;
-    let annualIsaContribution = monthlyIsaContribution * 12;
-    let tempNetWorth = pensionPot + isaPot;
-    let tempPension = pensionPot;
-    let tempIsa = isaPot;
-    let yearCount = 0;
-    let tempAnnualFigures: annualFigure[] = [{ year: currentYear, pension: pensionPot, isa: isaPot }];
+    let output = calculator.CalculateForecast({
+      pensionPot: pensionPot,
+      isaPot: isaPot,
+      timelines: [
+        {
+          startYear: 0,
+          endYear: 100,
+          monthlyPensionContribution: monthlyPensionContribution,
+          monthlyIsaContribution: monthlyIsaContribution
+        }
+      ],
+      age: age,
+      annualSpend: annualSpend
+    });
 
-    while (tempNetWorth < fireTarget) {
-      let futurePensionValue = tempPension * Math.pow(1.07, 1);
-      tempPension = futurePensionValue + annualPensionContribution;
-
-      let futureIsaValue = tempIsa * Math.pow(1.07, 1);
-      tempIsa = futureIsaValue + annualIsaContribution;
-
-      tempNetWorth = tempPension + tempIsa;
-      yearCount++;
-      tempAnnualFigures = [...tempAnnualFigures, { year: currentYear + yearCount, pension: tempPension, isa: tempIsa }];
-    }
-
-    setAnnualFigures(tempAnnualFigures);
-    setFireAge(age + yearCount);
-    setEndPension(tempPension);
-    setEndIsa(tempIsa);
-    let fiDate = new Date(new Date().setFullYear(currentYear + yearCount));
-    setFiDate(fiDate.toLocaleString("default", { month: "long", year: "numeric" }));
+    setFireNumber(output.fireNumber);
+    setAnnualFigures(output.annualFigures);
+    setFireAge(output.fireAge);
+    setEndPension(output.pension);
+    setEndIsa(output.isa);
+    setFiDate(output.fireDate);
   };
 
   function getTableContent() {
-    const iterateItem = (item: annualFigure) => {
+    const iterateItem = (item: InputAnnualFigure) => {
       return (
         <tr key={item.year}>
           <td>{item.year}</td>
           <td>{Pound.format(item.pension)}</td>
           <td>{Pound.format(item.isa)}</td>
-          <td>{Pound.format(item.pension+item.isa)}</td>
+          <td>{Pound.format(item.pension + item.isa)}</td>
         </tr>
       );
     };
