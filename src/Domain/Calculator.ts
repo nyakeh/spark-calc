@@ -39,7 +39,8 @@ class Calculator {
       fireDate: fiDate.toLocaleString("default", { month: "long", year: "numeric" }),
       pension: tempPension,
       isa: tempIsa,
-      annualFigures: tempAnnualFigures
+      annualFigures: tempAnnualFigures,
+      fireAchieved : tempNetWorth < fireTarget ? false : true
     };
   }
 }

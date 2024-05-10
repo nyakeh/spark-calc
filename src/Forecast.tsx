@@ -31,6 +31,7 @@ export type OutputForecast = {
   pension: number;
   isa: number;
   annualFigures: InputAnnualFigure[];
+  fireAchieved: boolean;
 };
 
 function Forecast() {
@@ -50,8 +51,7 @@ function Forecast() {
   ]);
 
   const [fireNumber, setFireNumber] = useState(600000);
-  const [fireAge, setFireAge] = useState(50);
-  const [fiDate, setFiDate] = useState("April 2044");
+  const [fiMessage, setFiMessage] = useState("You'll be FI in May 2044, aged 50");
   const [endPension, setEndPension] = useState(342715);
   const [endIsa, setEndIsa] = useState(304018);
   const [annualFigures, setAnnualFigures] = useState<InputAnnualFigure[]>([]);
@@ -69,10 +69,14 @@ function Forecast() {
 
     setFireNumber(output.fireNumber);
     setAnnualFigures(output.annualFigures);
-    setFireAge(output.fireAge);
     setEndPension(output.pension);
     setEndIsa(output.isa);
-    setFiDate(output.fireDate);
+
+    if(output.fireAchieved){
+      setFiMessage(`You'll be FI in ${output.fireDate}, aged ${output.fireAge}`);
+    } else {
+      setFiMessage(`Your investment timeline is too short ending ${output.fireDate}`);
+    }
   };
 
   function getTableContent() {
@@ -244,7 +248,7 @@ function Forecast() {
           <span>{Pound.format(fireNumber)}</span> FIRE number
         </p>
         <p>
-          You"ll be FI in <span>{fiDate}</span>, aged {fireAge}
+          {fiMessage}          
         </p>
         <p>
           Total: <span>{Pound.format(endPension + endIsa)}</span> | Pension: {Pound.format(endPension)} | ISA:{" "}
