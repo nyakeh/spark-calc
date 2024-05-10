@@ -38,16 +38,14 @@ function Forecast() {
 
   const [pensionPot, setPensionPot] = useState(25000);
   const [isaPot, setIsaPot] = useState(15000);
-  const [monthlyPensionContribution, setMonthlyPensionContribution] = useState(500);
-  const [monthlyIsaContribution, setMonthlyIsaContribution] = useState(500);
   const [age, setAge] = useState(30);
   const [annualSpend, setAnnualSpend] = useState(24000);
   const [timelines, setTimelines] = useState<InputForecastTimeline[]>([
     {
       startYear: 0,
-      endYear: 100,
-      monthlyPensionContribution: 500,
-      monthlyIsaContribution: 500
+      endYear: 49,
+      monthlyPensionContribution: 600,
+      monthlyIsaContribution: 400
     }
   ]);
 
@@ -64,14 +62,7 @@ function Forecast() {
     let output = calculator.CalculateForecast({
       pensionPot: pensionPot,
       isaPot: isaPot,
-      timelines: [
-        {
-          startYear: 0,
-          endYear: 100,
-          monthlyPensionContribution: monthlyPensionContribution,
-          monthlyIsaContribution: monthlyIsaContribution
-        }
-      ],
+      timelines: timelines,
       age: age,
       annualSpend: annualSpend
     });
@@ -112,28 +103,39 @@ function Forecast() {
   }
 
   const handlePensionChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const values = [...timelines];
-    values[index].monthlyPensionContribution = parseInt(element.target.value);
-    setTimelines(values);
+    const updatedTimelines = [...timelines];
+    updatedTimelines[index].monthlyPensionContribution = parseInt(element.target.value);
+    setTimelines(updatedTimelines);
   };
 
   const handleIsaChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const values = [...timelines];
-    values[index].monthlyIsaContribution = parseInt(element.target.value);
-    setTimelines(values);
+    const updatedTimelines = [...timelines];
+    updatedTimelines[index].monthlyIsaContribution = parseInt(element.target.value);
+    setTimelines(updatedTimelines);
   };
 
   const handleStartYearChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const values = [...timelines];
-    values[index].startYear = parseInt(element.target.value);
-    setTimelines(values);
+    const updatedTimelines = [...timelines];
+    updatedTimelines[index].startYear = parseInt(element.target.value);
+    setTimelines(updatedTimelines);
   };
 
   const handleEndYearChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const values = [...timelines];
-    values[index].endYear = parseInt(element.target.value);
-    setTimelines(values);
+    const updatedTimelines = [...timelines];
+    updatedTimelines[index].endYear = parseInt(element.target.value);
+    setTimelines(updatedTimelines);
   };
+
+  function addTimeline() {
+    const updatedTimelines = [...timelines];
+    updatedTimelines.push({
+      startYear: 50,
+      endYear: 100,
+      monthlyPensionContribution: 500,
+      monthlyIsaContribution: 500
+    });
+    setTimelines(updatedTimelines);
+  }
 
   return (
     <div>
@@ -164,8 +166,8 @@ function Forecast() {
               max={9999999}
             />
           </label>
-          <br />          
-          { timelines.map((obj, index) => (<div>
+          { timelines.map((obj, index) => (<div>            
+            <br />
             <div className="form-row">
               <label>
                 Start Year :
@@ -186,7 +188,7 @@ function Forecast() {
                   value={obj.endYear}
                   onChange={(event) => handleEndYearChange(event, index)}
                   min={1}
-                  max={99}
+                  max={100}
                 />
               </label>
             </div>
@@ -208,7 +210,7 @@ function Forecast() {
                 <input
                   key={"isa_"+index}
                   type="number"
-                  value={obj.monthlyPensionContribution}
+                  value={obj.monthlyIsaContribution}
                   onChange={(event) => handleIsaChange(event, index)}
                   min={0}
                   max={9999999}
@@ -216,8 +218,9 @@ function Forecast() {
               </label>
             </div>
             </div>)) 
-          }          
+          }
           <br />
+          <button onClick={() => addTimeline()} type="button">Add Timeline</button>
           <label>
             Age:
             <input type="number" value={age} onChange={(e) => setAge(Number(e.target.value))} min={1} max={100} />

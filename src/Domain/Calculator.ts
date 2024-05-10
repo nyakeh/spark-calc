@@ -1,7 +1,7 @@
+import { time } from "console";
 import { InputForecast, InputForecastTimeline, InputAnnualFigure, OutputForecast } from "../Forecast";
 
 class Calculator {
-    
   public CalculateForecast(input: InputForecast): OutputForecast {
     const currentYear = new Date().getFullYear();
     let yearCount = 0;
@@ -10,21 +10,26 @@ class Calculator {
     let tempNetWorth = input.pensionPot + input.isaPot;
     let tempPension = input.pensionPot;
     let tempIsa = input.isaPot;
-    
-    let timelineOne = input.timelines[0];
-    let annualPensionContribution = timelineOne.monthlyPensionContribution * 12;
-    let annualIsaContribution = timelineOne.monthlyIsaContribution * 12;
 
-    while (tempNetWorth < fireTarget) {
-      let futurePensionValue = tempPension * Math.pow(1.07, 1);
-      tempPension = futurePensionValue + annualPensionContribution;
+    for (let timeline of input.timelines) {
+      let annualPensionContribution = timeline.monthlyPensionContribution * 12;
+      let annualIsaContribution = timeline.monthlyIsaContribution * 12;
+      let timelineYearCount = 0;
+      while (tempNetWorth < fireTarget && timelineYearCount < timeline.endYear) {
+        let futurePensionValue = tempPension * Math.pow(1.07, 1);
+        tempPension = futurePensionValue + annualPensionContribution;
 
-      let futureIsaValue = tempIsa * Math.pow(1.07, 1);
-      tempIsa = futureIsaValue + annualIsaContribution;
+        let futureIsaValue = tempIsa * Math.pow(1.07, 1);
+        tempIsa = futureIsaValue + annualIsaContribution;
 
-      tempNetWorth = tempPension + tempIsa;
-      yearCount++;
-      tempAnnualFigures = [...tempAnnualFigures, { year: currentYear + yearCount, pension: tempPension, isa: tempIsa }];
+        tempNetWorth = tempPension + tempIsa;
+        yearCount++;
+        timelineYearCount++;
+        tempAnnualFigures = [
+          ...tempAnnualFigures,
+          { year: currentYear + yearCount, pension: tempPension, isa: tempIsa }
+        ];
+      }
     }
 
     let fiDate = new Date(new Date().setFullYear(currentYear + yearCount));
