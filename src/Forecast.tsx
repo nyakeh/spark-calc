@@ -42,6 +42,14 @@ function Forecast() {
   const [monthlyIsaContribution, setMonthlyIsaContribution] = useState(500);
   const [age, setAge] = useState(30);
   const [annualSpend, setAnnualSpend] = useState(24000);
+  const [timelines, setTimelines] = useState<InputForecastTimeline[]>([
+    {
+      startYear: 0,
+      endYear: 100,
+      monthlyPensionContribution: 500,
+      monthlyIsaContribution: 500
+    }
+  ]);
 
   const [fireNumber, setFireNumber] = useState(600000);
   const [fireAge, setFireAge] = useState(50);
@@ -103,6 +111,30 @@ function Forecast() {
     );
   }
 
+  const handlePensionChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const values = [...timelines];
+    values[index].monthlyPensionContribution = parseInt(element.target.value);
+    setTimelines(values);
+  };
+
+  const handleIsaChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const values = [...timelines];
+    values[index].monthlyIsaContribution = parseInt(element.target.value);
+    setTimelines(values);
+  };
+
+  const handleStartYearChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const values = [...timelines];
+    values[index].startYear = parseInt(element.target.value);
+    setTimelines(values);
+  };
+
+  const handleEndYearChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const values = [...timelines];
+    values[index].endYear = parseInt(element.target.value);
+    setTimelines(values);
+  };
+
   return (
     <div>
       <section className="App-main">
@@ -111,8 +143,9 @@ function Forecast() {
 
       <section className="App-main">
         <form onSubmit={reCalculate}>
+
           <label>
-            Pension pots:
+            Pension pot:
             <input
               type="number"
               value={pensionPot}
@@ -122,18 +155,7 @@ function Forecast() {
             />
           </label>
           <label>
-            Monthly Pension:
-            <input
-              type="number"
-              value={monthlyPensionContribution}
-              onChange={(e) => setMonthlyPensionContribution(Number(e.target.value))}
-              min={0}
-              max={10000}
-            />
-          </label>
-          <br />
-          <label>
-            ISA pots:
+            ISA pot:
             <input
               type="number"
               value={isaPot}
@@ -142,16 +164,59 @@ function Forecast() {
               max={9999999}
             />
           </label>
-          <label>
-            Monthly ISA:
-            <input
-              type="number"
-              value={monthlyIsaContribution}
-              onChange={(e) => setMonthlyIsaContribution(Number(e.target.value))}
-              min={0}
-              max={10000}
-            />
-          </label>
+          <br />          
+          { timelines.map((obj, index) => (<div>
+            <div className="form-row">
+              <label>
+                Start Year :
+                <input
+                  key={"start_year_"+index}
+                  type="number"
+                  value={obj.startYear}
+                  onChange={(event) => handleStartYearChange(event, index)}
+                  min={0}
+                  max={99}
+                />
+              </label>
+              <label>
+                End Year :
+                <input
+                  key={"end_year_"+index}
+                  type="number"
+                  value={obj.endYear}
+                  onChange={(event) => handleEndYearChange(event, index)}
+                  min={1}
+                  max={99}
+                />
+              </label>
+            </div>
+
+            <div className="form-row">
+              <label>
+                Monthly Pension:
+                <input
+                  key={"pension_"+index}
+                  type="number"
+                  value={obj.monthlyPensionContribution}
+                  onChange={(event) => handlePensionChange(event, index)}
+                  min={0}
+                  max={9999999}
+                />
+              </label>
+              <label>
+                Monthly ISA:
+                <input
+                  key={"isa_"+index}
+                  type="number"
+                  value={obj.monthlyPensionContribution}
+                  onChange={(event) => handleIsaChange(event, index)}
+                  min={0}
+                  max={9999999}
+                />
+              </label>
+            </div>
+            </div>)) 
+          }          
           <br />
           <label>
             Age:
